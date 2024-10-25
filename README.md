@@ -52,8 +52,6 @@ Consider the following system of equations:
 
 # Solution of Linear Equations
 
-This document outlines various methods for solving systems of linear equations. Each method is detailed with its initialization, iterative process, and convergence criteria.
-
 ## 1. Jacobi Iterative Method
 
 The **Jacobi Iterative Method** is an algorithm for determining the solutions of a diagonally dominant system of linear equations. 
@@ -139,18 +137,12 @@ The **Gauss-Seidel Method** is an improvement over the Jacobi method that uses t
 2. Solve \( Ly = b \) using forward substitution to find \( y \).
 3. Solve \( Ux = y \) using back substitution to find the solution vector \( x \).
 
-### Application
-- This method is efficient for solving multiple systems with the same coefficient matrix \( A \).
-
 ---
 
 
 
 
 # Numerical Methods for Root Finding and Differential Equations
-
-## Overview
-This repository contains implementations of various numerical methods for solving non-linear equations and ordinary differential equations (ODEs). These methods are widely used in scientific and engineering applications to find approximate solutions where analytical solutions may not be feasible.
 
 ## 1. Bisection Method
 The **Bisection Method** is a root-finding technique that systematically narrows down the interval within which a root exists. It works as follows:
