@@ -29,7 +29,7 @@ The application is designed to solve a system of a minimum of 5 linear equations
 ## How to Run the Application
 1. Clone this repository to your local machine using:
     ```bash
-    git clone <repository_link>
+    git clone https://github.com/jim2107054/-Numerical-Methods.git
     ```
 2. Navigate to the project directory.
 3. Compile and run the application using your preferred programming environment.
