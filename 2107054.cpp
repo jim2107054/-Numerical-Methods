@@ -1,180 +1,223 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+
+#define TOLERANCE 1e-6  // Convergence tolerance
+#define MAX_ITER 1000   // Maximum number of iterations
+
 // Jacobi Iterative Method
-void jacobiMethod(  vector<vector<double>>& A,   vector<double>& B, int n) {
-    vector<double> X(n, 0), tempX(n, 0);
-    double epsilon = 1e-6;
-    int maxIterations = 1000;
+vector<double> jacobiMethod(const vector<vector<double>>A, const vector<double>B) {
+    int n = A.size();
+    vector<double> x_old(n, 0);
+    vector<double> x_new(n, 0);
 
-    for (int iter = 0; iter < maxIterations; iter++) {
+    for (int iter = 0; iter < MAX_ITER; iter++) {
         for (int i = 0; i < n; i++) {
             double sum = 0;
             for (int j = 0; j < n; j++) {
-                if (j != i) {
-                    sum += A[i][j] * X[j];
+                if (i != j) {
+                    sum += A[i][j] * x_old[j];
                 }
             }
-            tempX[i] = (B[i] - sum) / A[i][i];
+            x_new[i] = (B[i] - sum) / A[i][i];
         }
 
         bool converged = true;
         for (int i = 0; i < n; i++) {
-            if (fabs(tempX[i] - X[i]) > epsilon) {
+            if (fabs(x_new[i] - x_old[i]) > TOLERANCE) {
                 converged = false;
+                break;
             }
-            X[i] = tempX[i];
         }
 
         if (converged) {
+            cout << "Converged after " << iter + 1 << " iterations." << endl;
             break;
         }
+
+        x_old = x_new;
     }
 
-    cout << "Jacobi Method Solution: \n";
-    for (int i = 0; i < n; i++) {
-        cout << "x[" << i << "] = " << X[i] << endl;
-    }
+    return x_new; //Final solution
 }
 
-// Gauss-Seidel Iterative Method
-void gaussSeidelMethod(  vector<vector<double>>& A,   vector<double>& B, int n) {
-    vector<double> X(n, 0);
-    double epsilon = 1e-6;
-    int maxIterations = 1000;
-
-    for (int iter = 0; iter < maxIterations; iter++) {
+vector<double> gaussSeidelMethod(const vector<vector<double>>A, const vector<double>B) {
+    int n = A.size();
+    vector<double> x(n, 0); // Initial guess (all zeros)
+    
+    for (int iter = 0; iter < MAX_ITER; iter++) {
+        vector<double> x_old = x; 
+        
         for (int i = 0; i < n; i++) {
             double sum = 0;
             for (int j = 0; j < n; j++) {
-                if (j != i) {
-                    sum += A[i][j] * X[j];
+                if (i != j) {
+                    sum += A[i][j] * x[j];  
                 }
             }
-            X[i] = (B[i] - sum) / A[i][i];
+            x[i] = (B[i] - sum) / A[i][i];
         }
-
+        
         bool converged = true;
         for (int i = 0; i < n; i++) {
-            if (fabs(X[i] - B[i]) > epsilon) {
+            if (fabs(x[i] - x_old[i]) > TOLERANCE) {
                 converged = false;
+                break;
             }
         }
-
+        
         if (converged) {
+            cout << "Converged after " << iter + 1 << " iterations." << endl;
             break;
         }
     }
-
-    cout << "Gauss-Seidel Method Solution: \n";
-    for (int i = 0; i < n; i++) {
-        cout << "x[" << i << "] = " << X[i] << endl;
-    }
+    
+    return x; //Final solution
 }
 
-// Gauss Elimination
-void gaussElimination(vector<vector<double>>& A, vector<double>& B, int n) {
-    for (int i = 0; i < n; i++) {
-        for (int j = i + 1; j < n; j++) {
-            double ratio = A[j][i] / A[i][i];
-            for (int k = i; k < n; k++) {
-                A[j][k] -= ratio * A[i][k];
+vector<double> gaussElimination(vector<vector<double>>A, vector<double>B) {
+    int n = A.size();
+
+    // Forward Elimination Process
+    for (int k = 0; k < n; k++) {
+        // Partial Pivoting
+        for (int i = k + 1; i < n; i++) {
+            double factor = A[i][k] / A[k][k];
+            for (int j = k; j < n; j++) {
+                A[i][j] = A[i][j] - factor * A[k][j];
             }
-            B[j] -= ratio * B[i];
+            B[i] = B[i] - factor * B[k];
         }
     }
 
-    vector<double> X(n);
+    // Back Substitution
+    vector<double> x(n);
     for (int i = n - 1; i >= 0; i--) {
-        X[i] = B[i];
+        x[i] = B[i];
         for (int j = i + 1; j < n; j++) {
-            X[i] -= A[i][j] * X[j];
+            x[i] = x[i] - A[i][j] * x[j];
         }
-        X[i] /= A[i][i];
+        x[i] = x[i] / A[i][i];
     }
 
-    cout << "Gauss Elimination Solution: \n";
-    for (int i = 0; i < n; i++) {
-        cout << "x[" << i << "] = " << X[i] << endl;
-    }
+    return x; //Final solution
 }
 
 // Gauss-Jordan Elimination
-void gaussJordanElimination(vector<vector<double>>& A, vector<double>& B, int n) {
+vector<double> gaussJordanElimination(vector<vector<double>>A, vector<double>B) {
+    int n = A.size();
+    
     for (int i = 0; i < n; i++) {
-        double pivot = A[i][i];
-        for (int j = 0; j < n; j++) {
-            A[i][j] /= pivot;
-        }
-        B[i] /= pivot;
+        A[i].push_back(B[i]);
+    }
 
+    for (int i = 0; i < n; i++) {
+        if (A[i][i] == 0) {
+            for (int j = i + 1; j < n; j++) {
+                if (A[j][i] != 0) {
+                    swap(A[i], A[j]);
+                    break;
+                }
+            }
+        }
+
+        // Normalize the current row 
+        double diagElement = A[i][i];
+        for (int j = 0; j <= n; j++) {
+            A[i][j] /= diagElement;
+        }
+
+        // Eliminate all other entries in the current column
         for (int j = 0; j < n; j++) {
-            if (i != j) {
+            if (j != i) {
                 double factor = A[j][i];
-                for (int k = 0; k < n; k++) {
+                for (int k = 0; k <= n; k++) {
                     A[j][k] -= factor * A[i][k];
                 }
-                B[j] -= factor * B[i];
             }
         }
     }
 
-    cout << "Gauss-Jordan Elimination Solution: \n";
+    // Extract the solution from the augmented matrix
+    vector<double> solution(n);
     for (int i = 0; i < n; i++) {
-        cout << "x[" << i << "] = " << B[i] << endl;
+        solution[i] = A[i][n];  // The last column is the solution
+    }
+
+    return solution; //Final solution
+}
+
+// Print all the solution.
+void print(vector<double>solution){
+    cout << "Solution:" << endl;
+    cout << fixed << setprecision(3);
+    for (int i = 0; i < solution.size(); i++) {
+      cout << "x" << i + 1 << " = " << solution[i] << endl;
     }
 }
 
-// LU Factorization
-void luFactorization(vector<vector<double>>& A, vector<double>& B, int n) {
-    vector<vector<double>> L(n, vector<double>(n, 0)), U(n, vector<double>(n, 0));
-    vector<double> Y(n), X(n);
+void performOperation(vector<vector<double>>&A, vector<double>&B){
+    int choice;
+    cout << "\nChoose the method to solve the system of equations:\n";
+    cout << "1. Jacobi Iterative Method\n";
+    cout << "2. Gauss-Seidel Iterative Method\n";
+    cout << "3. Gauss Elimination Method\n";
+    cout << "4. Gauss-Jordan Elimination Method\n";
+    cout << "5. LU Factorization Method\n";
+    cout << "6. Exit\n";
+    cout << "Enter your choice: ";
+    cin >> choice;
 
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            if (j < i)
-                L[j][i] = 0;
-            else {
-                L[j][i] = A[j][i];
-                for (int k = 0; k < i; k++) {
-                    L[j][i] = L[j][i] - L[j][k] * U[k][i];
-                }
+    switch (choice) {
+        case 1:
+            {
+                vector<double> solution = jacobiMethod(A, B);
+
+                // Print the solution
+                print(solution);
+                performOperation(A,B);
+                break;
             }
-        }
+        case 2:
+            {
+                vector<double> solution = gaussSeidelMethod(A, B);
 
-        for (int j = 0; j < n; j++) {
-            if (j < i)
-                U[i][j] = 0;
-            else if (j == i)
-                U[i][j] = 1;
-            else {
-                U[i][j] = A[i][j] / L[i][i];
-                for (int k = 0; k < i; k++) {
-                    U[i][j] = U[i][j] - ((L[i][k] * U[k][j]) / L[i][i]);
-                }
+                // Print the solution
+                print(solution);
+                performOperation(A,B);
+                break;
             }
-        }
+        case 3:
+            {
+                vector<double> solution = gaussElimination(A, B);
+
+                // Print the solution
+                print(solution);
+                performOperation(A,B);
+                break;
+            }
+        case 4:
+            {
+                vector<double> solution = gaussJordanElimination(A, B);
+
+                // Print the solution
+                print(solution);
+                performOperation(A,B);
+                break;
+            }
+        case 5:
+            {
+                //luFactorization(A, B);
+                //performOperation(A,B);
+                break;
+            }
+        case 6:
+            return ;
+        default:
+            cout << "Invalid choice!";
+            performOperation(A,B);
     }
 
-    for (int i = 0; i < n; i++) {
-        Y[i] = B[i];
-        for (int j = 0; j < i; j++) {
-            Y[i] -= L[i][j] * Y[j];
-        }
-        Y[i] /= L[i][i];
-    }
-
-    for (int i = n - 1; i >= 0; i--) {
-        X[i] = Y[i];
-        for (int j = i + 1; j < n; j++) {
-            X[i] -= U[i][j] * X[j];
-        }
-    }
-
-    cout << "LU Factorization Solution: \n";
-    for (int i = 0; i < n; i++) {
-        cout << "x[" << i << "] = " << X[i] << endl;
-    }
 }
 
 // Main function
@@ -197,36 +240,8 @@ int main() {
     for (int i = 0; i < n; i++) {
         cin >> B[i];
     }
-
-    int choice;
-    cout << "\nChoose the method to solve the system of equations:\n";
-    cout << "1. Jacobi Iterative Method\n";
-    cout << "2. Gauss-Seidel Iterative Method\n";
-    cout << "3. Gauss Elimination Method\n";
-    cout << "4. Gauss-Jordan Elimination Method\n";
-    cout << "5. LU Factorization Method\n";
-    cout << "Enter your choice: ";
-    cin >> choice;
-
-    switch (choice) {
-        case 1:
-            jacobiMethod(A, B, n);
-            break;
-        case 2:
-            gaussSeidelMethod(A, B, n);
-            break;
-        case 3:
-            gaussElimination(A, B, n);
-            break;
-        case 4:
-            gaussJordanElimination(A, B, n);
-            break;
-        case 5:
-            luFactorization(A, B, n);
-            break;
-        default:
-            cout << "Invalid choice!";
-    }
+    
+    performOperation(A,B);
 
     return 0;
 }
