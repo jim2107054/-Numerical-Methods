@@ -1,7 +1,7 @@
 # Console Application Development Using Numerical Methods
 
 ## Objective
-This project aims to create a console application that implements various numerical methods to solve linear equations, non-linear equations, and differential equations, along with matrix inversion. The focus is on collaborative development, understanding algorithms, and proper presentation.
+This project aims to create a console application that implements various numerical methods to solve linear equations, non-linear equations, and differential equations, along with matrix inversion. 
 
 ## Application Structure
 The application includes the following numerical methods:
