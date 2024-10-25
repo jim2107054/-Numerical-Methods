@@ -38,9 +38,9 @@ The application is designed to solve a system of a minimum of 5 linear equations
 Detailed explanations of each method are provided below:
 
 Example System of Equations:
-2x - y - 2z = -2 , 
-    -4x + 6y + 3z = 9 , 
-    -4x - 2y + 8z = -4
+ \(2x - y - 2z = -2\)
+ \(-4x + 6y + 3z = 9\)
+ \(-4x - 2y + 8z = -4\)
 
 - **Jacobi Iterative Method**: An iterative method for solving a system of linear equations.
 - **Gauss-Seidel Iterative Method**: Another iterative approach that improves the solution obtained by the Jacobi method.
