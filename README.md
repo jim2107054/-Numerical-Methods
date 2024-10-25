@@ -36,6 +36,7 @@ The application is designed to solve a system of a minimum of 5 linear equations
 
 ## Algorithms Used
 Detailed explanations of each method are provided below:
+
 Example System of Equations:
 2x - y - 2z = -2 , 
     -4x + 6y + 3z = 9 , 
