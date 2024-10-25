@@ -36,6 +36,19 @@ The application is designed to solve a system of a minimum of 5 linear equations
 
 ## Algorithms Used
 Detailed explanations of each method are provided below:
+Example System of Equations:
+2𝑥 + 3𝑦 − 𝑧 = 14
+𝑥 + 𝑦 + 2𝑧 = 2
+-3𝑥 + 2𝑦 + 3𝑧 = −1
+
+MATRIX A:​
+--        --
+| 2  3  -1 |
+| 4  1   2 |
+|−3  2   3 |
+--        --
+
+
 
 - **Jacobi Iterative Method**: An iterative method for solving a system of linear equations.
 - **Gauss-Seidel Iterative Method**: Another iterative approach that improves the solution obtained by the Jacobi method.
