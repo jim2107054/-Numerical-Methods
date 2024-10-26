@@ -171,7 +171,8 @@ void AFIFA_2107087(){
         cout << "    [5] Exit.\n";
         cout << "Enter your choice: ";
         cin >> choice;
-        if(choice == 5) return;
+
+        if(choice==5) return;
         if (choice != 0) {
             findRoots(coeffs, choice);
         }
@@ -179,6 +180,7 @@ void AFIFA_2107087(){
 
     cout << "Exiting program.\n";
 }
+
 
 void design(){
     cout<<"||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
