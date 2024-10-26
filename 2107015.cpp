@@ -1,5 +1,4 @@
 #include<bits/stdc++.h>
-
 using namespace std;
 
 
@@ -34,8 +33,8 @@ void printMatrix(const vector<vector<double>> &matrix){
         cout << endl;
     }
 }
-//inverse matrix
 
+//Inverse matrix
 void matrixinverse(vector<vector<double>>&A){
     int n = A.size();
     vector<vector<double>> inv(n, vector<double>(n,0));
@@ -43,7 +42,6 @@ void matrixinverse(vector<vector<double>>&A){
     
     for(int i=0; i < n; i++) inv[i][i] = 1;
 
-    // Gaussian elmn to reduceA to the identity matrix
     for(int i=0; i<n; i++){
         double pivot = A[i][i];
         if (pivot == 0) {
@@ -70,57 +68,3 @@ void matrixinverse(vector<vector<double>>&A){
     cout << "Inverted Matrix:" << endl;
     printMatrix(inv);
 }
-
-
-
-
-int main(){
-    int choice;
-    do{
-        cout << "Numerical Methods Application\n";
-        cout << "1. Runge-Kutta Method\n";
-        cout << "2. Matrix Inversion (n x n matrix)\n";
-        cout << "0. Exit\n";
-        cout << "Enter your choice: ";
-        cin >> choice;
-
-        switch (choice){
-            case 1:{
-                
-                double x0 = 0, y0 = 1, x = 2, h = 0.2;
-                rungekutta(x0, y0, x, h);
-                break;
-            }
-            case 2:{
-              
-                int n;
-                cout << "Enter the dimension of the matrix (n x n): ";
-                cin >> n;
-                vector<vector<double>> A(n, vector<double>(n));
-
-                cout << "Enter the elements of the matrix:\n";
-                for (int i = 0; i < n; i++) {
-                    for (int j = 0; j < n; j++) {
-                        cin >> A[i][j];
-                    }
-                }
-
-                matrixinverse(A);
-                break;
-            }
-            case 0:
-                cout << "Exiting..." << endl;
-                break;
-            default:
-                cout << "Invalid choice!" << endl;
-        }
-    }while(choice != 0);
-
-    return 0;
-}
-
-
-
-
-
-
