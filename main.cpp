@@ -148,65 +148,36 @@ void ZISAN_2107015() {
 }
 
 // AFIFA_2107087 functions
-void AFIFA_2107087() {
-    cout << "Enter the degree of the polynomial: ";
+void AFIFA_2107087(){
+    vector<double> coeffs;
     int degree;
-    cin >> degree;
 
-    vector<double> coeffs(degree + 1);
+    cout << "Enter the degree of the polynomial: ";
+    cin >> degree;
+    coeffs.resize(degree + 1);
+
     cout << "Enter " << degree + 1 << " coefficients in decreasing order of powers: ";
-    for (double &coef : coeffs) {
+    for (double& coef : coeffs) {
         cin >> coef;
     }
 
-    double tol;
-    cout << "Enter tolerance level: ";
-    cin >> tol;
-
-    while (true) {
-        try {
-            auto [a, b] = findInterval(coeffs, 1000.0, 0.01);
-
-            printBorder();
-            cout << "   Choose the root-finding method:" << endl;
-            printBorder();
-            cout << "         [1] Secant Method\n";
-            cout << "         [2] False Position Method\n";
-            cout << "         [3] Bisection Method\n";
-            cout << "         [4] Newton-Raphson Method\n";
-            cout << "         [5] Exit\n";
-            printBorder();
-            cout << "Enter your choice: ";
-            int choice;
-            cin >> choice;
-
-            switch (choice) {
-                case 1:
-                    secant(coeffs, a, b, tol);
-                    break;
-                case 2:
-                    falsePos(coeffs, a, b, tol);
-                    break;
-                case 3:
-                    bisection(coeffs, a, b, tol);
-                    break;
-                case 4: {
-                    double initialGuess;
-                    cout << "Enter initial guess for Newton-Raphson: ";
-                    cin >> initialGuess;
-                    newtonRaphson(coeffs, initialGuess);
-                    break;
-                }
-                case 5:
-                    cout << "Exiting program.\n";
-                    return;
-                default:
-                    cout << "Invalid choice!" << endl;
-            }
-        } catch (const exception& e) {
-            cout << e.what() << "\n";
+    int choice;
+    do {
+        cout << "\nChoose the root-finding method (0 to exit):\n";
+        cout << "    [1] Bisection Method\n";
+        cout << "    [2] False Position Method\n";
+        cout << "    [3] Secant Method\n";
+        cout << "    [4] Newton-Raphson Method\n";
+        cout << "    [5] Exit.\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+        if(choice == 5) return;
+        if (choice != 0) {
+            findRoots(coeffs, choice);
         }
-    }
+    } while (choice != 0);
+
+    cout << "Exiting program.\n";
 }
 
 void design(){
