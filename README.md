@@ -498,7 +498,7 @@ Repeat for ( x_{n-1}, x_{n-2}, ldots, x_1 ).</p>
     <li><strong>Output:</strong> After completing the iterations, the method outputs the estimated value of <code>y</code> at the target <code>x</code>.</li>
 </ul>
 
-<h2>2. Matrix Inversion</h2>
+<h1> Matrix Inversion</h1>
 <p>The <strong>Matrix Inversion</strong> method computes the inverse of a square matrix using Gaussian elimination. The key steps are as follows:</p>
 <ul>
     <li><strong>Initialization:</strong> Create an identity matrix of the same dimensions as the input matrix <code>A</code>, which will be transformed into the inverse.</li>
