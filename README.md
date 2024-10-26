@@ -48,6 +48,7 @@
     <li>Navigate to the project directory.</li>
     <li>Compile and run the application using your preferred programming environment.</li>
 </ol>
+
 <h2>Solution of Linear Equations</h2>
 
 <h3>1. Jacobi Iterative Method</h3>

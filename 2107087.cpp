@@ -3,7 +3,6 @@ using namespace std;
 #define MAX_ITER 1000
 #define EPSILON 0.001
 
-// Function to evaluate polynomial for a given x
 double evaluatePoly(const vector<double>& coeffs, double x) {
     double result = 0;
     for (size_t i = 0; i < coeffs.size(); ++i) {
@@ -12,7 +11,6 @@ double evaluatePoly(const vector<double>& coeffs, double x) {
     return result;
 }
 
-// Function to evaluate the derivative of the polynomial
 double evaluatePolyDerivative(const vector<double>& coeffs, double x) {
     double result = 0;
     for (size_t i = 0; i < coeffs.size() - 1; ++i) {
@@ -21,7 +19,6 @@ double evaluatePolyDerivative(const vector<double>& coeffs, double x) {
     return result;
 }
 
-// Function to find an interval with a root by scanning a range
 pair<double, double> findInterval(const vector<double>& coeffs, double range = 1000.0, double step = 0.01) {
     for (double i = -range; i < range; i += step) {
         if (evaluatePoly(coeffs, i) * evaluatePoly(coeffs, i + step) < 0) {
@@ -119,60 +116,4 @@ void newtonRaphson(const vector<double>& coeffs, double x0) {
     cout << "No suitable root found in " << MAX_ITER << "\n";
 }
 
-int main() {
-    cout << "Enter the degree of the polynomial: ";
-    int degree;
-    cin >> degree;
 
-    vector<double> coeffs(degree + 1);
-    cout << "Enter " << degree + 1 << " coefficients in decreasing order of powers: ";
-    for (double &coef : coeffs) {
-        cin >> coef;
-    }
-
-    double tol;
-    cout << "Enter tolerance level: ";
-    cin >> tol;
-
-    while (true) {
-        try {
-            auto [a, b] = findInterval(coeffs, 1000.0, 0.01);
-
-            cout << "\nChoose the root-finding method:\n";
-            cout << "1. Secant Method\n";
-            cout << "2. False Position Method\n";
-            cout << "3. Bisection Method\n";
-            cout << "4. Newton-Raphson Method\n";
-            cout << "5. Exit\n";
-            int choice;
-            cin >> choice;
-
-            switch (choice) {
-                case 1:
-                    secant(coeffs, a, b, tol);
-                    break;
-                case 2:
-                    falsePos(coeffs, a, b, tol);
-                    break;
-                case 3:
-                    bisection(coeffs, a, b, tol);
-                    break;
-                case 4: {
-                    double initialGuess;
-                    cout << "Enter initial guess for Newton-Raphson: ";
-                    cin >> initialGuess;
-                    newtonRaphson(coeffs, initialGuess);
-                    break;
-                }
-                case 5:
-                    cout << "Exiting program.\n";
-                    return 0;
-                default:
-                    cout << "Invalid choice!";
-            }
-        } catch (const exception& e) {
-            cout << e.what() << "\n";
-        }
-    }
-    return 0;
-}
