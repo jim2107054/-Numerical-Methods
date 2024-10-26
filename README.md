@@ -49,24 +49,6 @@
     <li>Compile and run the application using your preferred programming environment.</li>
 </ol>
 
-<h2>Equations</h2>
-<p>Example System of Equations:</p>
-<p>
-    \(2x - y - 2z = -2\)<br>
-    \(-4x + 6y + 3z = 9\)<br>
-    \(-4x - 2y + 8z = -4\)
-</p>
-
-<h2>Solving a System of Equations</h2>
-
-<h3>Example System of Equations</h3>
-<p>Consider the following system of equations:</p>
-<ol>
-    <li>2x - y - 2z = -2</li>
-    <li>-4x + 6y + 3z = 9</li>
-    <li>-4x - 2y + 8z = -4</li>
-</ol>
-
 <h2>Solution of Linear Equations</h2>
 
 <h3>1. Jacobi Iterative Method</h3>
@@ -171,6 +153,87 @@ Repeat for ( x_{n-1}, x_{n-2}, ldots, x_1 ).</p>
     <li>Solve ( Ux = y ) using back substitution to find the solution vector ( x ).</li>
 </ol>
 
+ <h2>Implementation Methods for Solving Systems of Linear Equations</h2>
+    
+<h2>1. Jacobi Method</h2>
+    <ul>
+        <li>Initialize all variable estimates in the array <strong>x</strong> to zero or some initial guess.</li>
+        <li>Iterate through the equations, updating each variable in the array <strong>x_new</strong> based on the formula:
+            <br><strong>x_new[i] = (b[i] - sum(A[i][j] * x[j] for j in range(n)))/A[i][i];</strong> 
+            where <strong>b</strong> is the constants vector and <strong>A</strong> is the coefficient matrix.</li>
+        <li>Check for convergence by comparing the current estimates in <strong>x_new</strong> with the previous ones in <strong>x</strong>. If the change in estimates is less than a predefined <strong>tolerance</strong>, the method is considered to have converged.</li>
+    </ul>
+
+<h2>2. Gauss-Seidel Method</h2>
+    <ul>
+        <li>Start with initial guesses for the variables stored in the array <strong>x</strong>.</li>
+        <li>For each variable, update its value in <strong>x</strong> using the latest available estimates. For example, the update for the <strong>i</strong>th variable is performed using:
+            <br><strong>x[i] = (b[i] - sum(A[i][j] * x[j] for j in range(i)) - sum(A[i][j] * x_old[j] for j in range(i + 1, n))) / A[i][i];</strong>
+        </li>
+        <li>Monitor convergence based on the changes in variable estimates by comparing the previous and current values of <strong>x</strong>.</li>
+    </ul>
+
+<h2>3. Gauss Elimination</h2>
+    <ul>
+        <li>Perform row operations on the augmented matrix <strong>A</strong> to eliminate variables systematically. This is done by modifying rows to create zeros below the diagonal, leading to an upper triangular form:</li>
+        <li>Once in upper triangular form, use back substitution to solve for the variables. Starting from the last equation, the solution for each variable <strong>x[i]</strong> can be calculated using the formula:
+            <br><strong>x[i] = (b[i] - sum(A[i][j] * x[j] for j in range(i + 1, n))) / A[i][i];</strong>
+        </li>
+    </ul>
+
+ <h2>4. Gauss-Jordan Elimination</h2>
+    <ul>
+        <li>Similar to Gauss elimination, use row operations on the matrix <strong>A</strong> to eliminate variables.</li>
+        <li>Continue manipulating the matrix to ensure that each leading coefficient in the rows is 1 and that all other entries in the column are zero:</li>
+        <li>This results in a direct solution for each variable stored in <strong>x</strong> without the need for back substitution. The final equations will have the form <strong>x[i] = b[i]</strong> for all <strong>i</strong>.</li>
+    </ul>
+
+ <h2>5. LU Factorization</h2>
+    <p>The <code>luFactorization</code> function solves a system of linear equations using LU factorization. It takes three parameters:</p>
+    <ul>
+        <li><code>vector<vector<double>> &A</code>: A square matrix representing the coefficients of the linear equations.</li>
+        <li><code>vector<double> &b</code>: A vector representing the right-hand side constants of the equations.</li>
+        <li><code>vector<double> &x</code>: A vector where the solution will be stored.</li>
+    </ul>
+
+<h2>Function Breakdown</h2>
+ <ul>
+        <li>Start with a square matrix <b>A</b>.</li>
+        <li>Initialize matrices <b>L</b> and <b>U</b>:
+            <ul>
+                <li><b>L</b> starts as an identity matrix:</li>
+                <p>
+                <b>L</b> = 
+                <b>
+                <pre>
+                1 & 0 & 0
+                0 & 1 & 0
+                0 & 0 & 1
+                </pre>
+                </b>
+                </p>
+                <li><b>U</b> initially equals <b>A</b>.</li>
+            </ul>
+        </li>
+        <li>Perform Gaussian elimination to transform <b>U</b> into an upper triangular form:</li>
+            <ul>
+                <li>For each pivot element in column <b>j</b>, eliminate all entries below it:</li>
+                <pre>
+                For each row i > j:
+                U[i][k] = U[i][k] - (U[i][j] / U[j][j]) * U[j][k]  (for k = j to n)
+                </pre>
+                <li>Store the multipliers used in <b>L</b>:</li>
+                <pre>
+                L[i][j] = U[i][j] / U[j][j]
+                </pre>
+            </ul>
+        <li>The resulting matrices <b>L</b> and <b>U</b> can be used to solve <b>Ax = b</b> efficiently:</li>
+            <ul>
+                <li>Use forward substitution to solve <b>Ly = b</b>.</li>
+                <li>Use back substitution to solve <b>Ux = y</b>.</li>
+            </ul>
+    </ul>
+
 <h1>Numerical Methods for Root Finding of Non-Linear Equations</h1>
 
 <h2>1. Bisection Method</h2>
@@ -240,7 +303,7 @@ Repeat for ( x_{n-1}, x_{n-2}, ldots, x_1 ).</p>
     <li><strong>Convergence</strong>: The method generally exhibits quadratic convergence, meaning it can quickly approach the root if the initial guess is close enough and the function is well-behaved.</li>
 </ol>
 
-<h2>Method Implementation Details</h2>
+<h2>Method Implementation Details for solving system of Non-Linear Equations</h2>
 
 <h3>1. Bisection Method</h3>
 <ul>
@@ -420,56 +483,32 @@ Repeat for ( x_{n-1}, x_{n-2}, ldots, x_1 ).</p>
     <li><strong>Return Value</strong>: Returns the accumulated <code>result</code>.</li>
 </ul>
 
-<h2>5. Runge-Kutta Method</h2>
-<p>The <strong>Runge-Kutta Method</strong> is commonly used for solving ordinary differential equations numerically:</p>
-<ol>
-    <li><strong>Initialization</strong>: Start with an initial condition <em>(t<sub>0</sub>, y<sub>0</sub>)</em> where <em>y<sub>0</sub></em> is the solution at time <em>t<sub>0</sub></em>.</li>
-    <li><strong>Iteration</strong>:
+<h1>Solution of Differential Equations</h1>
+<h2>1. Runge-Kutta Method</h2>
+<p>The <strong>Runge-Kutta Method</strong> is a numerical technique used to solve ordinary differential equations (ODEs). In this implementation, the method is specifically designed to solve first-order ODEs of the form <code>dy/dx = f(x, y)</code>. The steps involved are as follows:</p>
+<ul>
+    <li><strong>Derivative Function:</strong> The function <code>dydx</code> defines the derivative <code>f(x, y)</code>, which in this case is <code>2*x + 1</code>.</li>
+    <li><strong>Initialization:</strong> The method starts with initial conditions <code>(x0, y0)</code> and a target <code>x</code> value, along with a step size <code>h</code> to determine how far to progress in each iteration.</li>
+    <li><strong>Iteration:</strong> The method calculates the solution by performing several iterations:
         <ul>
-            <li>Calculate several intermediate values to improve accuracy:
-                <ul>
-                    <li>Compute <em>k<sub>1</sub>, k<sub>2</sub>, k<sub>3</sub>, k<sub>4</sub></em> based on the derivative function <em>f(t, y)</em>.</li>
-                </ul>
-            </li>
-            <li>Update the value of <em>y</em>:
-                <em>Use a weighted average of the <em>k</em> values to estimate the new <em>y</em> value at the next time step <em>t<sub>1</sub> = t<sub>0</sub> + h</em>.</em>
-            </li>
+            <li>Calculate four slopes (<code>k1</code>, <code>k2</code>, <code>k3</code>, <code>k4</code>) based on the derivative function at various points in the interval.</li>
+            <li>Update the value of <code>y</code> using a weighted average of these slopes, where the weights are derived from the Runge-Kutta method formulation.</li>
+            <li>Increment <code>x0</code> by the step size <code>h</code> for the next iteration.</li>
         </ul>
     </li>
-    <li><strong>Convergence</strong>: The fourth-order Runge-Kutta method (RK4) is particularly popular due to its balance between computational efficiency and accuracy.</li>
-</ol>
-
-<h2>4. Matrix Inversion</h2>
-<p><b>Matrix Inversion</b> is the process of finding the inverse of a given square matrix ( A ). The inverse matrix ( A^{-1} ) is such that when it is multiplied by ( A ), it yields the identity matrix ( I ):</p>
-<p>
-    [
-    AA^{-1} = I
-    </p>
-<p>This property is crucial in solving systems of linear equations, where the solution can be expressed as:</p>
-<p>
-    [
-    x = A^{-1}b
-    ]
-</p>
-
-<h3>Methods for Matrix Inversion</h3>
-<p>There are several methods to find the inverse of a matrix, including:</p>
-<ul>
-    <li><b>Gaussian Elimination:</b> Transforming the matrix into an augmented matrix and applying row operations until the left side is the identity matrix.</li>
-    <li><b>Adjugate Method:</b> Calculating the inverse using the formula:
-        [
-        A^{-1} = frac{1}{text{det}(A)} cdot text{adj}(A)
-        ]
-        where (text{det}(A)) is the determinant of (A) and (text{adj}(A)) is the adjugate of (A).</li>
-    <li><b>LU Decomposition:</b> Using the LU factorization of (A) to solve (Ax = b) efficiently.</li>
+    <li><strong>Output:</strong> After completing the iterations, the method outputs the estimated value of <code>y</code> at the target <code>x</code>.</li>
 </ul>
 
-<h4>Steps for Gaussian Elimination for Inversion</h4>
-<ol>
-    <li>Form the augmented matrix ([A | I]), where (I) is the identity matrix of the same size as (A).</li>
-    <li>Apply row operations to convert (A) into (I) while performing the same operations on (I). The right side will become (A^{-1}).</li>
-    <li>If the matrix (A) is not invertible (i.e., (text{det}(A) = 0)), then (A^{-1}) does not exist.</li>
-</ol>
+<h1> Matrix Inversion</h1>
+<p>The <strong>Matrix Inversion</strong> method computes the inverse of a square matrix using Gaussian elimination. The key steps are as follows:</p>
+<ul>
+    <li><strong>Initialization:</strong> Create an identity matrix of the same dimensions as the input matrix <code>A</code>, which will be transformed into the inverse.</li>
+    <li><strong>Pivoting:</strong> For each row, identify the pivot element (the diagonal element). If the pivot is zero, the matrix is singular, and inversion is not possible.</li>
+    <li><strong>Normalization:</strong> Normalize the current row by dividing all its elements by the pivot to make the pivot element equal to 1.</li>
+    <li><strong>Elimination:</strong> Use the normalized row to eliminate corresponding elements in all other rows, effectively transforming the input matrix into the identity matrix while simultaneously applying the same operations to the identity matrix, thereby obtaining the inverse.</li>
+    <li><strong>Completion:</strong> After processing all rows, the identity matrix will represent the inverse of the original matrix if the process is successful.</li>
+</ul>
+
 
 <h2>Video Presentation</h2>
 <p>A video demonstrating the application can be viewed <a href="link_to_video">here</a>.</p>
