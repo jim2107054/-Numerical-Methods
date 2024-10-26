@@ -1,4 +1,3 @@
-//Roll 2107087
 #include <bits/stdc++.h>
 using namespace std;
 #define MAX_ITER 1000
