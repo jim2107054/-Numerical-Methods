@@ -62,7 +62,7 @@ void performOperation(vector<vector<double>>& A, vector<double>& B) {
         }
         case 5: {
             vector<double> x(A.size());
-            if (luFactorization(A, B, x)) {
+            if (luFactorization(LU_A, LU_B, x)) {
                 print(x);
             } else {
                 cout << "Determinant 0, can't solve." << endl;

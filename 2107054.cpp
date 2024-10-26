@@ -153,7 +153,7 @@ vector<double> gaussJordanElimination(vector<vector<double>>&A, vector<double>&B
     return solution; 
 }
 
-bool luFactorization(vector<vector<double>> &A, vector<double> &b, vector<double>&x){
+bool luFactorization(vector<vector<double>>A, vector<double>b, vector<double>&x){
     int n = A.size();
     cout<<"n: "<<n<<endl;
 
