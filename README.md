@@ -439,6 +439,38 @@ Repeat for ( x_{n-1}, x_{n-2}, ldots, x_1 ).</p>
     <li><strong>Convergence</strong>: The fourth-order Runge-Kutta method (RK4) is particularly popular due to its balance between computational efficiency and accuracy.</li>
 </ol>
 
+<h2>4. Matrix Inversion</h2>
+<p><b>Matrix Inversion</b> is the process of finding the inverse of a given square matrix ( A ). The inverse matrix ( A^{-1} ) is such that when it is multiplied by ( A ), it yields the identity matrix ( I ):</p>
+<p>
+    [
+    AA^{-1} = I
+    </p>
+<p>This property is crucial in solving systems of linear equations, where the solution can be expressed as:</p>
+<p>
+    [
+    x = A^{-1}b
+    ]
+</p>
+
+<h3>Methods for Matrix Inversion</h3>
+<p>There are several methods to find the inverse of a matrix, including:</p>
+<ul>
+    <li><b>Gaussian Elimination:</b> Transforming the matrix into an augmented matrix and applying row operations until the left side is the identity matrix.</li>
+    <li><b>Adjugate Method:</b> Calculating the inverse using the formula:
+        [
+        A^{-1} = frac{1}{text{det}(A)} cdot text{adj}(A)
+        ]
+        where (text{det}(A)) is the determinant of (A) and (text{adj}(A)) is the adjugate of (A).</li>
+    <li><b>LU Decomposition:</b> Using the LU factorization of (A) to solve (Ax = b) efficiently.</li>
+</ul>
+
+<h4>Steps for Gaussian Elimination for Inversion</h4>
+<ol>
+    <li>Form the augmented matrix ([A | I]), where (I) is the identity matrix of the same size as (A).</li>
+    <li>Apply row operations to convert (A) into (I) while performing the same operations on (I). The right side will become (A^{-1}).</li>
+    <li>If the matrix (A) is not invertible (i.e., (text{det}(A) = 0)), then (A^{-1}) does not exist.</li>
+</ol>
+
 <h2>Video Presentation</h2>
 <p>A video demonstrating the application can be viewed <a href="link_to_video">here</a>.</p>
 
