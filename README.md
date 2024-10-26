@@ -142,7 +142,7 @@ The **Gauss-Seidel Method** is an improvement over the Jacobi method that uses t
 
 
 
-# Numerical Methods for Root Finding and Differential Equations
+# Numerical Methods for Root Finding of Non-Linear Equations
 
 ## 1. Bisection Method
 The **Bisection Method** is a root-finding technique that systematically narrows down the interval within which a root exists. It works as follows:
@@ -200,6 +200,117 @@ The **Newton-Raphson Method** is a powerful technique based on the derivative of
    - Repeat the iteration until the change in \( x \) is sufficiently small or until \( f(x_n) \) is close to zero.
 
 3. **Convergence**: The method generally exhibits quadratic convergence, meaning it can quickly approach the root if the initial guess is close enough and the function is well-behaved.
+
+## Method Implementation Details
+
+### 1. Bisection Method
+- **Initialization**: 
+  - Requires two initial guesses, \a\ and \b\, such that \f(\a\) and \f(\b \) have opposite signs.
+  - Checks this condition at the start using an \if\ statement to confirm a root exists between them.
+  
+- **Iteration**: 
+  - Calculate the midpoint \`mid\` of the interval \[\a\, \b\] using \`mid = (\a\ + \b\) / 2\`.
+  - Evaluate the function value at the midpoint with \`f(mid)\`.
+  - Update \`a\` or \`b\` based on the sign of \`f(mid)\`:
+    - If \`f(mid)\` is close to zero (within tolerance), return \`mid\`.
+    - If \`f(\a\) and \f(mid)\` have opposite signs, update \`b\` to \`mid\`.
+    - Otherwise, update \`a\` to \`mid\`.
+
+- **Termination**: 
+  - Continue until the absolute difference between \`a\` and \`b\` is less than the specified tolerance level, ensuring convergence.
+
+### 2. False Position Method
+- **Initialization**: 
+  - Begins with two initial points \`a\` and \`b\` that bracket a root, ensuring \`f(\a\)` and \`f(\b\)` have opposite signs.
+
+- **Iteration**: 
+  - Computes the x-intercept \`c\` of the line connecting \`(\a\, f(\a\))\` and \`(\b\, f(\b\))\`:
+    
+    \c \= \b\ - f(\b\) * (\a\ - \b\) / (f(\a\) - f(\b\));
+   
+  - Evaluate \f(c)\.
+
+- **Interval Update**: 
+  - Depending on the sign of \`f(c)\`, update \`a\` or \`b\`:
+    - If \`f(c)\` is close to zero, consider \`c\` as the root.
+    - If \`f(\a\) and \`f(c)\ have opposite signs, update \b\ to \c\.
+    - Otherwise, update \`a\` to \`c\`.
+
+- **Termination**: 
+  - Repeat until the difference between \`a\` and \`b\` is less than the specified tolerance level.
+
+### 3. Secant Method
+- **Initialization**: 
+  - Starts with two initial guesses, \`x0\` and \`x1\`, expected to bracket the root.
+
+- **Iteration**: 
+  - Calculate the next approximation \`x2\`:
+    
+   \ x2\ = \x1\ - f(\x1\) * (\x1\ - \x0\) / (f(\x1\) - f(\x0\));
+
+- **Updating Values**: 
+  - Update \`x0\` and \`x1\` to \`x1\` and \`x2\`, respectively.
+
+- **Termination**: 
+  - Continue until the absolute value of \`f(x2)\` is less than the specified tolerance or maximum iterations reached.
+
+### 4. Newton-Raphson Method
+- **Initialization**: 
+  - Begins with a single initial guess \`x0\`.
+
+- **Iteration**: 
+  - Calculate the next approximation:
+   
+    \x1\ = \x0\ - f(\x0\) / f_prime(\x0\);
+  
+
+- **Updating Values**: 
+  - Update \`x0\` to \`x1\`.
+
+- **Termination**: 
+  - Repeat until \`f(x1)\` is sufficiently close to zero or maximum iterations reached.
+
+### 5. Finding Interval for Root Detection
+- **Scanning Range**: 
+  - Scans a specified range to find two consecutive points where function values have opposite signs.
+
+- **Interval Return**: 
+  - Returns the interval \`[\x_i\, \x_{i+1}\]` for use in root-finding methods.
+
+- **Error Handling**: 
+  - If no interval is found, throw an exception indicating no root exists.
+
+### 6. Polynomial Evaluation Functions
+
+#### Function: \`evaluatePoly\`
+- **Purpose**: Evaluates a polynomial at a given \`x\` based on its coefficients.
+- **Parameters**: 
+  - \`const vector<double>& coeffs\`: Coefficients of the polynomial.
+  - \`double x\`: Value at which the polynomial is evaluated.
+
+- **Implementation**: 
+  - Initialize \`result\` to zero.
+  - Iterate over coefficients to calculate terms:
+    for (size_t i = 0; i < coeffs.size(); ++i) {
+        result += coeffs[i] * pow(x, coeffs.size() - i - 1);
+    }
+
+- **Return Value**: Returns the accumulated \`result\`.
+
+#### Function: \`evaluatePolyDerivative\`
+- **Purpose**: Computes the derivative of a polynomial at a given \`x\`.
+- **Parameters**: 
+  - \`const vector<double>& coeffs\`: Coefficients of the polynomial.
+  - \`double x\`: Point at which the derivative is evaluated.
+
+- **Implementation**: 
+  - Initialize \`result\` to zero.
+  - Iterate through coefficients (excluding constant term):
+    for (size_t i = 0; i < coeffs.size() - 1; ++i) {
+        result += coeffs[i] * (coeffs.size() - i - 1) * pow(x, coeffs.size() - i - 2);
+    }
+
+- **Return Value**: Returns the accumulated \`result\`.
 
 ## 5. Runge-Kutta Method
 The **Runge-Kutta Method** is commonly used for solving ordinary differential equations numerically:
