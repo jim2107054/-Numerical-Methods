@@ -49,14 +49,6 @@
     <li>Compile and run the application using your preferred programming environment.</li>
 </ol>
 
-<h2>Equations</h2>
-<p>Example System of Equations:</p>
-<p>
-    \(2x - y - 2z = -2\)<br>
-    \(-4x + 6y + 3z = 9\)<br>
-    \(-4x - 2y + 8z = -4\)
-</p>
-
 <h2>Solving a System of Equations</h2>
 
 <h3>Example System of Equations</h3>
