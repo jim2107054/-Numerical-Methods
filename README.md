@@ -214,12 +214,5 @@ The **Runge-Kutta Method** is commonly used for solving ordinary differential eq
 
 3. **Convergence**: The fourth-order Runge-Kutta method (RK4) is particularly popular due to its balance between computational efficiency and accuracy.
 
-
-## Contribution Guidelines
-Each group member contributed equally to the development of this project. Contributions can be seen in the GitHub commit history.
-
 ## Video Presentation
 A video demonstrating the application can be viewed [here](link_to_video).
-
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
