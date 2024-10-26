@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Console Application Development Using Numerical Methods</title>
 </head>
 <body>
 
@@ -83,17 +82,17 @@
 <ol>
     <li>For each equation, calculate the new value for each variable:
         <p>
-        \[
+        [
         x_i^{(k+1)} = \frac{1}{a_{ii}} \left( b_i - \sum_{j \neq i} a_{ij} x_j^{(k)} \right)
-        \]
-        where \( k \) is the iteration index.
+        ]
+        where ( k ) is the iteration index.
         </p>
     </li>
     <li>Repeat the above step for each variable until the changes between iterations are less than the specified tolerance.</li>
 </ol>
 
 <h4>Convergence</h4>
-<p>The method converges if the matrix \( A \) is strictly diagonally dominant or symmetric positive definite.</p>
+<p>The method converges if the matrix ( A ) is strictly diagonally dominant or symmetric positive definite.</p>
 
 <hr>
 
@@ -102,7 +101,7 @@
 
 <h4>Initialization</h4>
 <ul>
-    <li>Start with an initial guess for the solution vector \( x^{(0)} \).</li>
+    <li>Start with an initial guess for the solution vector ( x^{(0)} ).</li>
     <li>Set the tolerance level for convergence.</li>
 </ul>
 
@@ -110,9 +109,9 @@
 <ol>
     <li>For each equation, update the variable immediately after calculating its new value:
         <p>
-        \[
-        x_i^{(k+1)} = \frac{1}{a_{ii}} \left( b_i - \sum_{j < i} a_{ij} x_j^{(k+1)} - \sum_{j > i} a_{ij} x_j^{(k)} \right)
-        \]
+        [
+        x_i^{(k+1)} = frac{1}{a_{ii}} left( b_i - sum_{j < i} a_{ij} x_j^{(k+1)} - sum_{j > i} a_{ij} x_j^{(k)} right)
+        ]
         </p>
     </li>
     <li>Continue iterating until the solution converges.</li>
@@ -128,7 +127,7 @@
 
 <h4>Steps</h4>
 <ol>
-    <li>Form the augmented matrix \([A | b]\).</li>
+    <li>Form the augmented matrix ([A | b]).</li>
     <li>Apply row operations to eliminate variables from the equations below.</li>
     <li>Transform the matrix into upper triangular form.</li>
 </ol>
@@ -136,10 +135,10 @@
 <h4>Back Substitution</h4>
 <p>Once in upper triangular form, use back substitution to find the solution:</p>
 <p>
-\[
-x_n = \frac{b_n - \sum_{j=n+1}^{m} a_{nj} x_j}{a_{nn}}
-\]
-Repeat for \( x_{n-1}, x_{n-2}, \ldots, x_1 \).</p>
+[
+x_n = frac{b_n - sum_{j=n+1}^{m} a_{nj} x_j}{a_{nn}}
+]
+Repeat for ( x_{n-1}, x_{n-2}, ldots, x_1 ).</p>
 
 <hr>
 
@@ -148,7 +147,7 @@ Repeat for \( x_{n-1}, x_{n-2}, \ldots, x_1 \).</p>
 
 <h4>Steps</h4>
 <ol>
-    <li>Start with the augmented matrix \([A | b]\).</li>
+    <li>Start with the augmented matrix ([A | b]).</li>
     <li>Use row operations to achieve RREF:
         <ul>
             <li>Normalize the leading coefficient to 1.</li>
@@ -163,13 +162,13 @@ Repeat for \( x_{n-1}, x_{n-2}, \ldots, x_1 \).</p>
 <hr>
 
 <h3>5. LU Factorization</h3>
-<p><b>LU Factorization</b> decomposes the matrix \( A \) into a lower triangular matrix \( L \) and an upper triangular matrix \( U \).</p>
+<p><b>LU Factorization</b> decomposes the matrix ( A ) into a lower triangular matrix ( L ) and an upper triangular matrix ( U ).</p>
 
 <h4>Steps</h4>
 <ol>
-    <li>Decompose \( A \) such that \( A = LU \) using Gaussian elimination without row swaps.</li>
-    <li>Solve \( Ly = b \) using forward substitution to find \( y \).</li>
-    <li>Solve \( Ux = y \) using back substitution to find the solution vector \( x \).</li>
+    <li>Decompose ( A ) such that ( A = LU ) using Gaussian elimination without row swaps.</li>
+    <li>Solve ( Ly = b ) using forward substitution to find ( y ).</li>
+    <li>Solve ( Ux = y ) using back substitution to find the solution vector ( x ).</li>
 </ol>
 
 <h1>Numerical Methods for Root Finding of Non-Linear Equations</h1>
